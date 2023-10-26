@@ -19,7 +19,10 @@ const (
 	DefaultShutdownTimeout = 20 * time.Second
 )
 
-// GracefulShutdown is a utility to shut down a server gracefully
+// GracefulShutdown gracefully shuts down the operations specified in the ops map.
+//
+// It takes a context.Context, a timeout duration, and a map of operations.
+// The function returns a channel that will be closed once all the operations are completed.
 func GracefulShutdown(
 	ctx context.Context, timeout time.Duration, ops map[string]Operation,
 ) <-chan struct{} {
