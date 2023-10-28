@@ -13,7 +13,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// New the default logger
+// New initializes the logger with the given log file.
 func New(logFile string) {
 	// UNIX Time is faster and smaller than most timestamps
 	consoleWriter := &zerolog.ConsoleWriter{
@@ -54,7 +54,15 @@ func New(logFile string) {
 	zerolog.DefaultContextLogger = &l
 }
 
-// getLogWriter returns a lumberjack.logger
+// getLogWriter returns a *lumberjack.Roller and an error.
+//
+// It takes a logFile string as a parameter.
+// It initializes a maxSize int64 variable with a value of 50 * 1024 * 1024 (50 MB).
+// It creates an options variable of type *lumberjack.Options and sets its MaxBackups field to 5 and its MaxAge field to 30.
+// It sets the Compress field of options to false.
+// It creates a roller variable of type *lumberjack.Roller by calling lumberjack.NewRoller with the logFile, maxSize, and options as arguments.
+// If an error occurs during the creation of the roller, it returns nil and the error.
+// Otherwise, it returns the roller and nil.
 func getLogWriter(logFile string) (*lumberjack.Roller, error) {
 	var maxSize int64 = 50 * 1024 * 1024 // 50 MB
 
