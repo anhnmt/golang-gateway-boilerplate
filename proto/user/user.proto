@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package user.v1;
+
+import "google/api/annotations.proto";
+import "google/api/httpbody.proto";
+
+service UserService {
+  rpc List(ListRequest) returns (google.api.HttpBody) {
+    option (google.api.http) = {get: "/{page=**}"};
+  }
+}
+
+message ListRequest {
+  // The path to the page to index.
+  string page = 1;
+}
