@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	_ "net/http/pprof"
 
 	"connectrpc.com/vanguard"
 	"github.com/rs/zerolog/log"
@@ -28,6 +29,15 @@ func New(
 
 func (s *Server) Start(ctx context.Context) error {
 	g, _ := errgroup.WithContext(ctx)
+
+	if config.PprofEnabled() {
+		g.TryGo(func() error {
+			addr := fmt.Sprintf(":%d", config.PprofPort())
+			log.Info().Msgf("starting pprof on http://localhost%s", addr)
+
+			return http.ListenAndServe(addr, nil)
+		})
+	}
 
 	// Serve the http server on the http listener.
 	g.TryGo(func() error {
