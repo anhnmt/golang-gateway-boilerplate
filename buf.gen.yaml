@@ -9,7 +9,7 @@ plugins:
   - plugin: buf.build/protocolbuffers/go:v1.31.0
     out: proto/gengo
     opt: paths=source_relative
-  - plugin: buf.build/connectrpc/go:v1.11.0
+  - plugin: buf.build/connectrpc/go:v1.12.0
     out: proto/gengo
     opt: paths=source_relative
   # gRPC generated code is used by vanguardgrpc examples
