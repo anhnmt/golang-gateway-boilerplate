@@ -13,17 +13,18 @@ import (
 func New(
 	userService *userservice.Service,
 ) *vanguard.Transcoder {
-	svc := []*vanguard.Service{
+	services := []*vanguard.Service{
 		vanguard.NewService(userv1connect.NewUserServiceHandler(userService)),
+	}
+
+	transcoderOptions := []vanguard.TranscoderOption{
+		vanguard.WithUnknownHandler(custom404handler()),
 	}
 
 	// Using Vanguard, the server can also accept RESTful requests. The Vanguard
 	// Transcoder handles both REST and RPC traffic, so there's no need to mount
 	// the RPC-only handler.
-	transcoder, err := vanguard.NewTranscoder(
-		svc,
-		vanguard.WithUnknownHandler(custom404handler()),
-	)
+	transcoder, err := vanguard.NewTranscoder(services, transcoderOptions...)
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed to create transcoder")
 	}

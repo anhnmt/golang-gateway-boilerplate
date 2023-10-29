@@ -50,7 +50,6 @@ func New(env string) {
 
 	log.Info().
 		Str("env", env).
-		Str("app_name", AppName()).
 		Str("goarch", runtime.GOARCH).
 		Str("goos", runtime.GOOS).
 		Str("version", runtime.Version()).
