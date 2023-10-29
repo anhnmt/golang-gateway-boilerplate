@@ -22,12 +22,13 @@ func init() {
 	flag.StringVar(&env, "env", "", "environment")
 	flag.StringVar(&logFile, "log-file", "", "log file path, ex: logs/data.log")
 	flag.Parse()
+
+	// bootstrap
+	logger.New(logFile)
+	config.New(env)
 }
 
 func main() {
-	logger.New(logFile)
-	config.New(env)
-
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 

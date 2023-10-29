@@ -4,6 +4,7 @@ go 1.21
 
 require (
 	connectrpc.com/connect v1.12.0
+	connectrpc.com/vanguard v0.1.0
 	github.com/bytedance/sonic v1.10.2
 	github.com/google/wire v0.5.0
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha

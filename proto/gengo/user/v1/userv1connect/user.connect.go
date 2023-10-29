@@ -9,7 +9,6 @@ import (
 	context "context"
 	errors "errors"
 	v1 "github.com/anhnmt/golang-gateway-boilerplate/proto/gengo/user/v1"
-	httpbody "google.golang.org/genproto/googleapis/api/httpbody"
 	http "net/http"
 	strings "strings"
 )
@@ -40,7 +39,7 @@ const (
 
 // UserServiceClient is a client for the user.v1.UserService service.
 type UserServiceClient interface {
-	List(context.Context, *connect.Request[v1.ListRequest]) (*connect.Response[httpbody.HttpBody], error)
+	List(context.Context, *connect.Request[v1.ListRequest]) (*connect.Response[v1.ListResponse], error)
 }
 
 // NewUserServiceClient constructs a client for the user.v1.UserService service. By default, it uses
@@ -53,7 +52,7 @@ type UserServiceClient interface {
 func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) UserServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &userServiceClient{
-		list: connect.NewClient[v1.ListRequest, httpbody.HttpBody](
+		list: connect.NewClient[v1.ListRequest, v1.ListResponse](
 			httpClient,
 			baseURL+UserServiceListProcedure,
 			opts...,
@@ -63,17 +62,17 @@ func NewUserServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 
 // userServiceClient implements UserServiceClient.
 type userServiceClient struct {
-	list *connect.Client[v1.ListRequest, httpbody.HttpBody]
+	list *connect.Client[v1.ListRequest, v1.ListResponse]
 }
 
 // List calls user.v1.UserService.List.
-func (c *userServiceClient) List(ctx context.Context, req *connect.Request[v1.ListRequest]) (*connect.Response[httpbody.HttpBody], error) {
+func (c *userServiceClient) List(ctx context.Context, req *connect.Request[v1.ListRequest]) (*connect.Response[v1.ListResponse], error) {
 	return c.list.CallUnary(ctx, req)
 }
 
 // UserServiceHandler is an implementation of the user.v1.UserService service.
 type UserServiceHandler interface {
-	List(context.Context, *connect.Request[v1.ListRequest]) (*connect.Response[httpbody.HttpBody], error)
+	List(context.Context, *connect.Request[v1.ListRequest]) (*connect.Response[v1.ListResponse], error)
 }
 
 // NewUserServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -100,6 +99,6 @@ func NewUserServiceHandler(svc UserServiceHandler, opts ...connect.HandlerOption
 // UnimplementedUserServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedUserServiceHandler struct{}
 
-func (UnimplementedUserServiceHandler) List(context.Context, *connect.Request[v1.ListRequest]) (*connect.Response[httpbody.HttpBody], error) {
+func (UnimplementedUserServiceHandler) List(context.Context, *connect.Request[v1.ListRequest]) (*connect.Response[v1.ListResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("user.v1.UserService.List is not implemented"))
 }

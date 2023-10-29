@@ -8,12 +8,16 @@ package di
 
 import (
 	"context"
+	"github.com/anhnmt/golang-gateway-boilerplate/internal/gateway"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/server"
+	"github.com/anhnmt/golang-gateway-boilerplate/internal/service/userservice"
 )
 
 // Injectors from wire.go:
 
 func InitServer(ctx context.Context) (*server.Server, error) {
-	serverServer := server.New()
+	service := userservice.New()
+	transcoder := gateway.New(service)
+	serverServer := server.New(transcoder)
 	return serverServer, nil
 }

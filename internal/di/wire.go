@@ -9,11 +9,15 @@ import (
 
 	"github.com/google/wire"
 
+	"github.com/anhnmt/golang-gateway-boilerplate/internal/gateway"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/server"
+	"github.com/anhnmt/golang-gateway-boilerplate/internal/service"
 )
 
 func InitServer(ctx context.Context) (*server.Server, error) {
 	wire.Build(
+		service.ProviderServiceSet,
+		gateway.ProviderGatewaySet,
 		server.ProviderServerSet,
 	)
 
