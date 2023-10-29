@@ -44,8 +44,6 @@ func main() {
 		}
 	}(ctx, srv)
 
-	log.Info().Msg("Hello world")
-
 	// wait for termination signal
 	wait := utils.GracefulShutdown(ctx, utils.DefaultShutdownTimeout, map[string]utils.Operation{
 		"server": func(newCtx context.Context) error {

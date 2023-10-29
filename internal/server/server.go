@@ -7,6 +7,8 @@ import (
 
 	"connectrpc.com/vanguard"
 	"github.com/rs/zerolog/log"
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/anhnmt/golang-gateway-boilerplate/pkg/config"
@@ -30,16 +32,20 @@ func (s *Server) Start(ctx context.Context) error {
 	// Serve the http server on the http listener.
 	g.TryGo(func() error {
 		addr := fmt.Sprintf(":%d", config.AppPort())
-		log.Info().Msgf("Starting application http://localhost%s", addr)
+		log.Info().
+			Str("app_name", config.AppName()).
+			Msgf("starting server on http://localhost%s", addr)
 
 		// create new http server
 		srv := &http.Server{
-			Addr:    addr,
-			Handler: s.gateway,
-			// ReadHeaderTimeout: 10 * time.Second,
-			// ReadTimeout:       1 * time.Minute,
-			// WriteTimeout:      1 * time.Minute,
-			// MaxHeaderBytes:    8 * 1024, // 8KiB
+			Addr: addr,
+			// We use the h2c package in order to support HTTP/2 without TLS,
+			// so we can handle gRPC requests, which requires HTTP/2, in
+			// addition to Connect and gRPC-Web (which work with HTTP 1.1).
+			Handler: h2c.NewHandler(
+				s.gateway,
+				&http2.Server{},
+			),
 		}
 
 		// run the server
