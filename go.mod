@@ -5,9 +5,11 @@ go 1.21
 require (
 	connectrpc.com/connect v1.12.0
 	github.com/bytedance/sonic v1.10.2
+	github.com/google/wire v0.5.0
 	github.com/natefinch/lumberjack/v3 v3.0.0-alpha
 	github.com/rs/zerolog v1.31.0
 	github.com/spf13/viper v1.17.0
+	golang.org/x/sync v0.4.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20231016165738-49dd2c1f3d0b
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
