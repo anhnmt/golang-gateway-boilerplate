@@ -1,10 +1,10 @@
 package gateway
 
 import (
+	"fmt"
 	"net/http"
 
 	"connectrpc.com/vanguard"
-	"github.com/rs/zerolog/log"
 
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/service/userservice"
 	"github.com/anhnmt/golang-gateway-boilerplate/proto/gengo/user/v1/userv1connect"
@@ -12,7 +12,7 @@ import (
 
 func New(
 	userService *userservice.Service,
-) *vanguard.Transcoder {
+) (*vanguard.Transcoder, error) {
 	services := []*vanguard.Service{
 		vanguard.NewService(userv1connect.NewUserServiceHandler(userService)),
 	}
@@ -26,10 +26,10 @@ func New(
 	// the RPC-only handler.
 	transcoder, err := vanguard.NewTranscoder(services, transcoderOptions...)
 	if err != nil {
-		log.Fatal().Err(err).Msg("failed to create transcoder")
+		return nil, fmt.Errorf("failed to create transcoder: %w", err)
 	}
 
-	return transcoder
+	return transcoder, nil
 }
 
 func custom404handler() http.Handler {
