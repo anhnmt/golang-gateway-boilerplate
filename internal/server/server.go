@@ -12,7 +12,7 @@ import (
 	"golang.org/x/net/http2/h2c"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/anhnmt/golang-gateway-boilerplate/pkg/config"
+	"github.com/anhnmt/golang-gateway-boilerplate/internal/bootstrap/config"
 )
 
 type Server struct {

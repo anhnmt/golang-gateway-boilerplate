@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  gateway:
+    image: ghrc.io/anhnmt/golang-gateway-boilerplate:latest
+    build:
+      context: ..
+      dockerfile: ./build/Dockerfile
+    networks:
+      - base-project
+    # If the container goes down, it will restart
+    restart: "always"
+    env_file:
+      - ../.env.example
+
+networks:
+  base-project:
+    external: true

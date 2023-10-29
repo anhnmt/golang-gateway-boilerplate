@@ -17,7 +17,10 @@ import (
 
 func InitServer(ctx context.Context) (*server.Server, error) {
 	service := userservice.New()
-	transcoder := gateway.New(service)
+	transcoder, err := gateway.New(service)
+	if err != nil {
+		return nil, err
+	}
 	serverServer := server.New(transcoder)
 	return serverServer, nil
 }
