@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"connectrpc.com/connect"
 	"connectrpc.com/vanguard"
 
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/service/userservice"
@@ -11,10 +12,11 @@ import (
 )
 
 func New(
+	interceptors connect.Option,
 	userService *userservice.Service,
 ) (*vanguard.Transcoder, error) {
 	services := []*vanguard.Service{
-		vanguard.NewService(userv1connect.NewUserServiceHandler(userService)),
+		vanguard.NewService(userv1connect.NewUserServiceHandler(userService, interceptors)),
 	}
 
 	transcoderOptions := []vanguard.TranscoderOption{
