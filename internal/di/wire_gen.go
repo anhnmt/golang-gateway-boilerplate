@@ -9,6 +9,7 @@ package di
 import (
 	"context"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/gateway"
+	"github.com/anhnmt/golang-gateway-boilerplate/internal/interceptors"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/server"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/service/userservice"
 )
@@ -16,8 +17,9 @@ import (
 // Injectors from wire.go:
 
 func InitServer(ctx context.Context) (*server.Server, error) {
+	option := interceptors.New()
 	service := userservice.New()
-	transcoder, err := gateway.New(service)
+	transcoder, err := gateway.New(option, service)
 	if err != nil {
 		return nil, err
 	}
