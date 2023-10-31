@@ -28,4 +28,4 @@ vendor/
 !.env.example
 *.env*
 
-katana_data/
+tmp/

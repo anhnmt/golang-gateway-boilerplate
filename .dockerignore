@@ -6,6 +6,8 @@ tests/
 .env.example
 .golangci.yml
 Makefile
+.air.toml
+tmp/
 
 .logs/
 *.log.gz
