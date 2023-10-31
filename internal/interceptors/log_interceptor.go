@@ -7,6 +7,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var _ connect.Interceptor = &logInterceptor{}
+
 type logInterceptor struct{}
 
 func NewLogInterceptor() *logInterceptor {
