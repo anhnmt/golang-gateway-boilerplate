@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   gateway:
-    image: ghrc.io/anhnmt/golang-gateway-boilerplate:latest
+    image: ghcr.io/anhnmt/golang-gateway-boilerplate:latest
     build:
       context: ..
       dockerfile: ./build/Dockerfile
