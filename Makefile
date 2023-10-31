@@ -14,3 +14,4 @@ wire.gen:
 
 go.install:
 	go install github.com/google/wire/cmd/wire@v0.5.0
+	go install github.com/cosmtrek/air@v1.49.0
