@@ -12,6 +12,7 @@ import (
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/interceptors"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/server"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/service/userservice"
+	"github.com/anhnmt/golang-gateway-boilerplate/pkg/redis"
 )
 
 // Injectors from wire.go:
@@ -23,6 +24,10 @@ func InitServer(ctx context.Context) (*server.Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	serverServer := server.New(transcoder)
+	universalClient, err := redis.NewRedis(ctx)
+	if err != nil {
+		return nil, err
+	}
+	serverServer := server.New(transcoder, universalClient)
 	return serverServer, nil
 }
