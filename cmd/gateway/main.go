@@ -7,8 +7,8 @@ import (
 	"github.com/rs/zerolog/log"
 
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/bootstrap/config"
+	"github.com/anhnmt/golang-gateway-boilerplate/internal/bootstrap/di"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/bootstrap/logger"
-	"github.com/anhnmt/golang-gateway-boilerplate/internal/di"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/server"
 	"github.com/anhnmt/golang-gateway-boilerplate/utils"
 )
