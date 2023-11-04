@@ -13,10 +13,12 @@ import (
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/interceptors"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/server"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/service"
+	"github.com/anhnmt/golang-gateway-boilerplate/pkg/redis"
 )
 
 func InitServer(ctx context.Context) (*server.Server, error) {
 	wire.Build(
+		redis.ProviderRedisSet,
 		service.ProviderServiceSet,
 		interceptors.ProviderInterceptorSet,
 		gateway.ProviderGatewaySet,

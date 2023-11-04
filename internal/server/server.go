@@ -7,6 +7,7 @@ import (
 	_ "net/http/pprof"
 
 	"connectrpc.com/vanguard"
+	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -17,13 +18,16 @@ import (
 
 type Server struct {
 	gateway *vanguard.Transcoder
+	redis   redis.UniversalClient
 }
 
 func New(
 	gateway *vanguard.Transcoder,
+	redis redis.UniversalClient,
 ) *Server {
 	return &Server{
 		gateway: gateway,
+		redis:   redis,
 	}
 }
 
@@ -67,6 +71,12 @@ func (s *Server) Start(ctx context.Context) error {
 
 func (s *Server) Close(ctx context.Context) error {
 	g, _ := errgroup.WithContext(ctx)
+
+	if config.RedisEnabled() {
+		g.TryGo(func() error {
+			return s.redis.Close()
+		})
+	}
 
 	return g.Wait()
 }
