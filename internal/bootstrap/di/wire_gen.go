@@ -12,6 +12,7 @@ import (
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/interceptors"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/server"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/service/userservice"
+	"github.com/anhnmt/golang-gateway-boilerplate/pkg/db"
 	"github.com/anhnmt/golang-gateway-boilerplate/pkg/redis"
 )
 
@@ -28,6 +29,10 @@ func InitServer(ctx context.Context) (*server.Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	serverServer := server.New(transcoder, universalClient)
+	client, err := db.NewDatabase(ctx, universalClient)
+	if err != nil {
+		return nil, err
+	}
+	serverServer := server.New(transcoder, universalClient, client)
 	return serverServer, nil
 }
