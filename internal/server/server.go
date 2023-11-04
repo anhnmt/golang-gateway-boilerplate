@@ -13,21 +13,25 @@ import (
 	"golang.org/x/net/http2/h2c"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/anhnmt/golang-gateway-boilerplate/ent"
 	"github.com/anhnmt/golang-gateway-boilerplate/internal/bootstrap/config"
 )
 
 type Server struct {
 	gateway *vanguard.Transcoder
 	redis   redis.UniversalClient
+	db      *ent.Client
 }
 
 func New(
 	gateway *vanguard.Transcoder,
 	redis redis.UniversalClient,
+	db *ent.Client,
 ) *Server {
 	return &Server{
 		gateway: gateway,
 		redis:   redis,
+		db:      db,
 	}
 }
 
@@ -71,6 +75,12 @@ func (s *Server) Start(ctx context.Context) error {
 
 func (s *Server) Close(ctx context.Context) error {
 	g, _ := errgroup.WithContext(ctx)
+
+	if config.DbEnabled() {
+		g.TryGo(func() error {
+			return s.db.Close()
+		})
+	}
 
 	if config.RedisEnabled() {
 		g.TryGo(func() error {
