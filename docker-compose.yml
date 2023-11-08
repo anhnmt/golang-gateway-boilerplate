@@ -4,14 +4,14 @@ services:
   gateway:
     image: ghcr.io/anhnmt/golang-gateway-boilerplate:latest
     build:
-      context: ..
-      dockerfile: ./build/Dockerfile
+      context: .
+      dockerfile: ./Dockerfile
     networks:
       - base-project
     # If the container goes down, it will restart
     restart: "always"
     env_file:
-      - ../.env.example
+      - .env.example
 
 networks:
   base-project:
