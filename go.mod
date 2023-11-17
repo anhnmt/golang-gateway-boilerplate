@@ -6,7 +6,7 @@ require (
 	ariga.io/entcache v0.1.1-0.20230620164151-0eb723a11c40
 	connectrpc.com/connect v1.12.0
 	connectrpc.com/vanguard v0.1.0
-	entgo.io/ent v0.12.4
+	entgo.io/ent v0.12.5
 	github.com/bytedance/sonic v1.10.2
 	github.com/google/uuid v1.4.0
 	github.com/google/wire v0.5.0
@@ -15,7 +15,7 @@ require (
 	github.com/redis/go-redis/v9 v9.3.0
 	github.com/rs/zerolog v1.31.0
 	github.com/spf13/viper v1.17.0
-	golang.org/x/net v0.17.0
+	golang.org/x/net v0.18.0
 	golang.org/x/sync v0.5.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20231106174013-bbf56f31fb17
 	google.golang.org/grpc v1.59.0
@@ -59,8 +59,8 @@ require (
 	github.com/zclconf/go-cty v1.14.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/arch v0.6.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	golang.org/x/crypto v0.15.0 // indirect
+	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/mod v0.14.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
